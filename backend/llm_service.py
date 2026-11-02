@@ -153,8 +153,12 @@ Respond in English.
 
 
 # 5. Analyze the webpage with the LLM
-
-def analyze_with_llm(user_prompt: str, page_text: str) -> dict:
+def analyze_with_llm(
+    user_prompt: str,
+    page_text: str,
+    temperature: float = 0.6,
+    top_p: float = 0.95
+) -> dict:
 
     if not user_prompt.strip():
         raise ValueError("User profile cannot be empty.")
@@ -180,8 +184,8 @@ def analyze_with_llm(user_prompt: str, page_text: str) -> dict:
     response = client.chat.completions.create(
         model=MODEL,
         messages=messages,
-        temperature=0.6,
-        top_p=0.95,
+        temperature=temperature,
+        top_p=top_p,
         max_completion_tokens=2500
     )
 
@@ -203,6 +207,13 @@ def analyze_with_llm(user_prompt: str, page_text: str) -> dict:
     return {
         "analysis": analysis,
         "model": response.model,
+    
+        "parameters": {
+            "temperature": temperature,
+            "top_p": top_p,
+            "max_completion_tokens": 2500
+        },
+    
         "usage": {
             "prompt_tokens": usage.prompt_tokens if usage else None,
             "completion_tokens": usage.completion_tokens if usage else None,

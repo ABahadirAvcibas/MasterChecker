@@ -7,8 +7,27 @@ const pageInfo = document.getElementById("pageInfo");
 const statusText = document.getElementById("status");
 const resultBox = document.getElementById("result");
 
+// LLM parameter controls
+const temperatureSlider = document.getElementById("temperature");
+const topPSlider = document.getElementById("topP");
+
+const temperatureValue = document.getElementById("temperatureValue");
+const topPValue = document.getElementById("topPValue");
+
+const experimentInfo = document.getElementById("experimentInfo");
+
 let currentPage = null;
 
+
+temperatureSlider.addEventListener("input", () => {
+    temperatureValue.textContent =
+        Number(temperatureSlider.value).toFixed(2);
+});
+
+topPSlider.addEventListener("input", () => {
+    topPValue.textContent =
+        Number(topPSlider.value).toFixed(2);
+});
 
 // 1. Read the current webpage
 
@@ -119,6 +138,7 @@ analyzeButton.addEventListener("click", async () => {
 
     analyzeButton.disabled = true;
     statusText.textContent = "Sending data to Python...";
+    experimentInfo.textContent = "";
 
     try {
 
@@ -134,7 +154,10 @@ analyzeButton.addEventListener("click", async () => {
                 body: JSON.stringify({
                     user_prompt: prompt,
                     page_text: currentPage.page_text,
-                    page_url: currentPage.page_url
+                    page_url: currentPage.page_url,
+
+                    temperature: Number(temperatureSlider.value),
+                    top_p: Number(topPSlider.value)
                 })
             }
         );
@@ -148,6 +171,15 @@ analyzeButton.addEventListener("click", async () => {
         }
 
         resultBox.textContent = data.analysis || "No analysis available.";
+
+        const params = data.parameters;
+
+        experimentInfo.textContent =
+            `Model: ${data.model}\n` +
+            `Temperature: ${params.temperature.toFixed(2)}\n` +
+            `Top-p: ${params.top_p.toFixed(2)}\n` +
+            `Max completion tokens: ${params.max_completion_tokens}\n` +
+            `Total tokens used: ${data.usage?.total_tokens ?? "N/A"}`;
 
         statusText.textContent = "Python backend responded successfully.";
 
