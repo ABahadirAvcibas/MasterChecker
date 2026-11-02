@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MasterChecker</title>
+
+    <link rel="stylesheet" href="popup.css">
+    <script src="popup.js" defer></script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>MasterChecker</h1>
+            <p>Master's Admission Eligibility Checker</p>
+        </header>
+
+        <section>
+            <h2>Your Profile</h2>
+
+            <textarea
+                id="userPrompt"
+                placeholder="Describe your GPA, degree, language scores, budget, interests..."
+                rows="6"
+            ></textarea>
+        </section>
+
+        <section>
+            <h2>Current Webpage</h2>
+
+            <button id="readPage">
+                Read Current Page
+            </button>
+
+            <p id="pageInfo">
+                No page analyzed yet.
+            </p>
+        </section>
+
+        <section>
+            <button id="analyzeButton" disabled>
+                Check Eligibility
+            </button>
+        </section>
+
+        <p id="status"></p>
+
+        <section>
+            <h2>Results</h2>
+            <pre id="result"></pre>
+        </section>
+
+    </div>
+
+</body>
+</html>

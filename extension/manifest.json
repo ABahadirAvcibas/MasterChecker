@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "MasterChecker",
+  "version": "0.1.0",
+  "description": "AI-powered master's admission eligibility checker",
+
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "http://127.0.0.1/*"
+  ],
+
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
